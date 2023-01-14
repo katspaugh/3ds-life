@@ -1,4 +1,4 @@
-require("./dslayout")
+require("dslayout")
 
 local top_width = 400
 local top_height = 240
@@ -6,9 +6,15 @@ local top_height = 240
 local bottom_width = 320
 local bottom_height = 240
 
-local image = nil
 local image_x = 0
-local image_y = 0
+local image_y = -50
+local scale_x = 1
+local scale_offset = 0
+
+local touchx = -10
+local touchy = -10
+
+local current_image = nil
 
 function love.load()
    dslayout:init({
@@ -17,19 +23,17 @@ function love.load()
    })
 
    image = love.graphics.newImage("assets/yay.png")
+   image2 = love.graphics.newImage("assets/yay2.png")
+   current_image = image
 end
 
 
 function drawTopScreen()
-   love.graphics.setColor(255, 255, 255)
-
-   love.graphics.draw(image, image_x, image_y)
-
-   --love.graphics.reset()
+   love.graphics.draw(current_image, image_x, image_y, 0, scale_x, 1, scale_offset)
 end
 
 function drawBottomScreen()
-   love.graphics.setColor(255, 255, 255)
+   love.graphics.draw(current_image, image_x - (top_width - bottom_width) / 2, image_y - bottom_height, 0, scale_x, 1, scale_offset)
 end
 
 function love.draw(screen)
@@ -43,18 +47,29 @@ function love.draw(screen)
 end
 
 function love.update()
+   local time = love.timer.getTime()
+
+   if time % 2 < 1 then
+      current_image = image
+   else
+      current_image = image2
+   end
 end
 
 -- https://love2d.org/wiki/GamepadButton
 function love.gamepadpressed(joystick, button)
    if button == "dpleft" then
-      image_x = image_x - 1
+      scale_x = -1
+      scale_offset = top_width
    elseif button == "dpright" then
-      image_x = image_x + 1
+      scale_x = 1
+      scale_offset = 0
    elseif button == "dpup" then
-      image_y = image_y - 1
+      image_y = image_y - 10
    elseif button == "dpdown" then
-      image_y = image_y + 1
+      image_y = image_y + 10
+   elseif button == 'start' then
+      love.event.quit()
    end
 end
 
@@ -68,4 +83,21 @@ function love.keypressed(key)
    elseif key == "down" then
       love.gamepadpressed({}, "dpdown")
    end
+end
+
+function love.touchmoved(id, x, y, dx, dy, pressure)
+  touchx = x
+  touchy = y
+end
+
+function love.mousemoved(x, y, dx, dy, istouch)
+  dslayout:mousemoved(x, y, dx, dy, istouch)
+end
+
+function love.mousepressed(x, y, button, istouch, presses)
+  dslayout:mousepressed(x, y, button, istouch, presses)
+end
+
+function love.mousereleased(x, y, button, istouch, presses)
+  dslayout:mousereleased(x, y, button, istouch, presses)
 end
