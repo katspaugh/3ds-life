@@ -5,9 +5,9 @@
 # [string] @description : Description of the game.
 # [string] @version     : Version of the game in {major}.{minor}.{revision} format.
 [metadata]
-name = "Capibara"
+name = "Life"
 author = "katspaugh"
-description = "A capibara pet for 3DS"
+description = "A game of life for 3DS"
 version = "0.1.0"
 
 ## --- Build Options --- ##
