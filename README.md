@@ -66,7 +66,8 @@ From the docker, run:
 
 Where `192.168.0.54` is the IP address of the console from the previous step.
 
-<video controls="controls" src="https://user-images.githubusercontent.com/381895/212480519-88b47cd9-4012-42b5-b577-7f48f35928d7.mov" width="600" />
+<video controls="controls" src="https://user-images.githubusercontent.com/381895/213908522-c846f8d0-b8cd-404a-8323-84ae68f3f249.mov
+" width="640" />
 
 
 ## Conclusion
