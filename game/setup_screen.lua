@@ -53,18 +53,22 @@ end
 local isPressed = false
 
 function love.mousemoved(x, y, dx, dy, istouch)
-   if isPressed then
+   if isPressed and love.touchmoved ~= nil then
       love.touchmoved(1, x - bottom_x, y - bottom_y, dx, dy, 1)
    end
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
    isPressed = true
-   love.touchpressed(1, x - bottom_x, y - bottom_y, 1, 1, 1)
+   if love.touchpressed ~= nil then
+      love.touchpressed(1, x - bottom_x, y - bottom_y, 1, 1)
+   end
 end
 
 function love.mousereleased(x, y, button, istouch, presses)
    isPressed = false
-   love.touchreleased(1, x - bottom_x, y - bottom_y, 1, 1, 1)
+   if love.touchreleased ~= nil then
+      love.touchreleased(1, x - bottom_x, y - bottom_y, 1, 1, 1)
+   end
 end
 
