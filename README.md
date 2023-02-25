@@ -6,7 +6,7 @@ Here's a write up of the process.
 ## Goal
 The end goal is to be able to write a home-brew app or a game and run it on the console.
 
-We will be developing on the computer, building and sending the built binaries over Wi-Fi to the console.
+We will be developing on the computer, building and sending the built binaries over wi-fi to the console.
 
 ## Rooting
 
@@ -18,7 +18,7 @@ Follow this excellent detailed guide step-by-step: [3DS Hacks Guide](https://3ds
 
 <img src="https://user-images.githubusercontent.com/381895/212480538-0b846d07-387e-41fd-8164-85ab1a08089f.jpeg" width="600" />
 
-## Home-brew dev
+## Home-brew toolkit
 
 Once you have a rooted console, we need to set up a dev environment on your computer.
 
@@ -28,37 +28,21 @@ The easiest way to get it running is to use their [Docker image](https://hub.doc
 
 Download the image, run it in Docker, and expose a local folder to it, so that you can edit the code on your PC, but build and send it to the 3DS from the Docker container.
 
-## LovePotion
+## Coding
 
-Now we want to code a game. I’ve chosen Lua to write a game because it’s a simple language and it comes with an excellent framework called Löve.
+Now we want to code a game. The easiest is to use C. DevkitPro comes with [a bunch of examples](https://github.com/devkitPro/3ds-examples) to get you started.
 
-On the 3DS, there’s a Lua interpreter and a port of Löve, called [LovePotion](https://lovebrew.org).
+After writing the code, build the game:
 
-One part of this framework is [LoveBrew](https://lovebrew.org/#/lovebrew) and this is what we’ll use to build our project.
-
-You need to download the latest LoveBrew binary and put it inside the Docker container. Make it executable via `chmod +x` and place it in `/usr/local/bin` of the Docker container.
-
-It will log any build errors to `/root/.config/lovebrew`.
-
-To create a new project, go to the folder you exposed from your host computer, and run this command:
-
-```bash
-lovebrew init
+```
+make clean && make
 ```
 
-This will generate a basic config for your project and put it in a `lovebrew.toml` file.
+This will create a .3dsx file.
 
-Next, write some Lua code following the LovePotion/Love2d docs. I’m not going to go into much detail here, but you can see an example in this repo.
+Now we want to send it to the console over wi-fi. Launch the Homebrew Launcher on the 3DS and press Y. It will show you the IP address of the console in the local network.
 
-Once the code is ready and tested on the computer (using the regular Love2d), build it:
-
-```bash
-lovebrew build
-```
-
-Next, open your 3DS console, run the Homebrew Launcher, and press `Y`. This will start a server over Wi-Fi and display its IP address so that you can send your build over to the console.
-
-Inside the docker container, run:
+From the docker container, send the file like so:
 
 ```bash
 3dslink build/MyProject.3dsx -a 192.168.0.54 -0 sdmc:/3ds/MyProject.3dsx
