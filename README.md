@@ -53,8 +53,7 @@ Where `192.168.0.54` is the IP address of the console from the previous step.
 ## Result
 Here's the game I wrote. It's a simple Game of Life that creates cool generative patterns.
 
-<video controls="controls" src="https://user-images.githubusercontent.com/381895/213908522-c846f8d0-b8cd-404a-8323-84ae68f3f249.mov
-" width="640" />
+<video controls="controls" src="https://user-images.githubusercontent.com/381895/228176276-173d1b1e-06df-4691-8f5e-ef9b9e40aa7c.mov" />
 
 ## Conclusion
 
